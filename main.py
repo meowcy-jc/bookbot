@@ -1,4 +1,5 @@
 from stats import *
+import sys
 
 
 # show a nice page of book anaylze
@@ -16,11 +17,18 @@ def print_message(filepath):
     print_alphabet_characters(sorted_list)
     print("============= END ===============")
    
-    
+# input filepath and get information of book    
+def get_information_book():
+    if len(sys.argv) != 2:
+        print("Usage: python3 main.py <path_to_book>")
+        sys.exit(1)
+    else:
+        print_message(sys.argv[1])
 
-print_message("books/frankenstein.txt")
+get_information_book()
 
 
+# Prints ['main.py']
 # # print contents of book
 # def get_book_text(filepath):
 #     with open(filepath) as f:
@@ -32,4 +40,3 @@ print_message("books/frankenstein.txt")
 #     print(contents_of_book)
 
 # main()
-
