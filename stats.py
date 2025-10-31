@@ -1,3 +1,6 @@
+import string
+
+
 # count how many words in this book
 def get_num_words(filepath):
     with open(filepath) as f:
@@ -17,45 +20,42 @@ def get_num_characters(filepath):
         lowercase_words = book_contents.lower()
         book_characters = list(lowercase_words)
 
-        for character in book_characters:
-            if character not in num_characters:
-                num_characters[character] = 0
-        
-        for character in book_characters:
-            if character in num_characters:
-                num_characters[character] += 1
+    for character in book_characters:
+        if character not in num_characters:
+            num_characters[character] = 1
+        else:
+            num_characters[character] += 1
 
     return num_characters
 
 
 # get num of each alphabet character in book
 def get_num_alphabet_characters(filepath):
-
-    num_characters = {}
-
-    import string
-
     lowercase_alphabet = string.ascii_lowercase
     list_alphabet = list(lowercase_alphabet)
+    num_alphabet = 0
+    num_characters = dict.fromkeys(list_alphabet, num_alphabet)
 
-    for character in list_alphabet:
-        if character not in num_characters:
-            num_characters[character] = 0
+# other way to create a alphabet dictionary
+    # num_characters = {}
+    # for character in list_alphabet:
+    #     if character not in num_characters:
+    #         num_characters[character] = 0
 
     with open(filepath) as f:
         book_contents = f.read()
         lowercase_words = book_contents.lower()
         book_characters = list(lowercase_words)
         
-        for character in book_characters:
-            if character in num_characters:
-                num_characters[character] += 1
+    for character in book_characters:
+        if character in num_characters:
+            num_characters[character] += 1
 
     return num_characters
 
 
 # create a new list has two keys
-def get_list(num_characters):
+def get_character_list(num_characters):
     character_list = []
 
     for character in num_characters:
@@ -70,7 +70,7 @@ def sort_on(charcter_list):
 
 
 # sort the list
-def sort(character_list):
+def sort_list(character_list):
     character_list.sort(reverse=True, key=sort_on)
     return character_list
 
@@ -100,8 +100,8 @@ def print_alphabet_characters_hard(sorted_list):
         print(f"{char}: {count}")
 
     # other way to print
-    # for char in final_dintionary:
-    #     count = final_dintionary.get(char)
+    # for char in final_dictionary:
+    #     count = final_dictionary.get(char)
     #     print(f"{char}: {count}")
     
 
@@ -117,6 +117,7 @@ def print_alphabet_characters_bad(sorted_list):
         else:  
             index +=1
         
+        # other way to end this function
         # if current_char == last_char:
         #     break 
 
