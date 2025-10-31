@@ -1,31 +1,21 @@
-def count_words(filepath):
+# count how many words in this book
+def get_num_words(filepath):
     with open(filepath) as f:
-        contents_of_book = f.read()
-        words_of_book = contents_of_book.split()
+        book_contents = f.read()
+        book_words = book_contents.split()
+        num_words = len(book_words)
 
-        nums_of_words = len(words_of_book)
-
-    return nums_of_words
+    return num_words
 
 
+# get num of each character
 def get_num_characters(filepath):
     num_characters = {}
-
-    #--Lowvercarse Alphabet--
-    # import string
-
-    # lowercase_alphabet = string.ascii_lowercase
-    # list_alphabet = list(lowercase_alphabet)
-
-    # for letter in list_alphabet:
-    #     if letter not in num_characters:
-    #         num_characters[letter] = 0
 
     with open(filepath) as f:
         book_contents = f.read()
         lowercase_words = book_contents.lower()
         book_characters = list(lowercase_words)
-        # print(book_characters)
 
         for character in book_characters:
             if character not in num_characters:
@@ -37,72 +27,105 @@ def get_num_characters(filepath):
 
     return num_characters
 
-# create a new dictionary has two values
-def new_list(num_characters):
-    new_list = []
+
+# get num of each alphabet character in book
+def get_num_alphabet_characters(filepath):
+
+    num_characters = {}
+
+    import string
+
+    lowercase_alphabet = string.ascii_lowercase
+    list_alphabet = list(lowercase_alphabet)
+
+    for character in list_alphabet:
+        if character not in num_characters:
+            num_characters[character] = 0
+
+    with open(filepath) as f:
+        book_contents = f.read()
+        lowercase_words = book_contents.lower()
+        book_characters = list(lowercase_words)
+        
+        for character in book_characters:
+            if character in num_characters:
+                num_characters[character] += 1
+
+    return num_characters
+
+
+# create a new list has two keys
+def get_list(num_characters):
+    character_list = []
 
     for character in num_characters:
-        new_list.append({"char": character, "num": num_characters[character]})
+        character_list.append({"char": character, "num": num_characters[character]})
     
-    return new_list
+    return character_list
 
 
-# sort by num
-def sort_on(new_list):
-    return new_list["num"]
+# sort new list by "num"
+def sort_on(charcter_list):
+    return charcter_list["num"]
 
 
 # sort the list
-def sort(new_list):
-    new_list.sort(reverse=True, key=sort_on)
-    return new_list
+def sort(character_list):
+    character_list.sort(reverse=True, key=sort_on)
+    return character_list
 
 
-# only take alphabet
-def print_alphabet_characters(new_list):
-    # get a list contains only alphabet
-    #--easy way--
-    # for item in new_list:
-    #     char = item["char"]
-    #     count = item["num"]
-    #     if char.isalpha():
-    #         print(f"{char}: {count}")
-    final_dintionary = {}
+# print alphabet character in list -- 1.easiet way
+def print_alphabet_characters(sorted_list):
+    for item in sorted_list:
+        char = item["char"]
+        count = item["num"]
 
-    #--difficult way one--
-    # for item in new_list:
-    #     char = item["char"]
-    #     count = item["num"]
-    #     if char.isalpha():
-    #         final_dintionary[char] = count
+        if char.isalpha():
+            print(f"{char}: {count}")
 
-    # #--bad way--
-    # # for k in final_dintionary:
-    # #     v = final_dintionary.get(k)
-    # #     print(f"{k}: {v}")
+            
+# print alphabet character in list -- 2.transfer list to dictionary
+def print_alphabet_characters_hard(sorted_list):
+    final_dictionary = {}
+
+    for item in sorted_list:
+        char = item["char"]
+        count = item["num"]
+
+        if char.isalpha():
+            final_dictionary[char] = count
     
-    # for k, v in final_dintionary.items():
-    #     print(f"{k}: {v}")
+    for char, count in final_dictionary.items():
+        print(f"{char}: {count}")
+
+    # other way to print
+    # for char in final_dintionary:
+    #     count = final_dintionary.get(char)
+    #     print(f"{char}: {count}")
     
-    # Stupidest way...
-    print(new_list)
+
+# print alphabet character in list -- 3. delete non alphabet character
+def print_alphabet_characters_bad(sorted_list):
     index = 0
-    current_char = new_list[0]["char"]
-    last_char = new_list[-1]["char"]
+    current_char = sorted_list[0]["char"]
+    last_char = sorted_list[-1]["char"]
 
-    # while index < len(new_list):
-    while True:
-        print(f"Checking {current_char} at index {index}")
+    while index < len(sorted_list):
         if not current_char.isalpha():
-            print(f"Removing {new_list[index]}, len {len(new_list)}")
-            del new_list[index]
-        else:
-            print(f"Keeping {new_list[index]}, len {len(new_list)}")   
+            del sorted_list[index]
+        else:  
             index +=1
         
-        if current_char == last_char:
-            break
+        # if current_char == last_char:
+        #     break 
 
-        current_char = new_list[index]["char"]
+        # current_char = sorted_list[index]["char"]
 
-    print(new_list)
+        if current_char != last_char:
+            current_char = sorted_list[index]["char"] 
+
+    for item in sorted_list:
+        char = item["char"]
+        count = item["num"]
+        print(f"{char}: {count}")
