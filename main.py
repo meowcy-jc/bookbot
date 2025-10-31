@@ -1,4 +1,3 @@
-# from stats import count_words, get_num_characters, new_dictionary, sort_on
 from stats import *
 
 
